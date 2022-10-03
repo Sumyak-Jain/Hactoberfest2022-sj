@@ -1,30 +1,26 @@
-class test():
-    def __init__ (self,subject1,subject2):
-        self.subject1= subject1
-        self.subject2= subject2
-    def show(self):
-        print(self.subject1)
-        print(self.subject2)
-        #  add   test1,test2
-    def __add__ (self,other):
-        subject1= self.subject1 + other.subject1
-        subject2= self.subject2 + other.subject2
-        return test(subject1,subject2)
-        #  sub   test1,test2
-    def __sub__ (self,other):
-        subject1= self.subject1 - other.subject1
-        subject2= self.subject2 - other.subject2
-        return test(subject1,subject2)
+class operator_overload:
+    def __init__(self, x1, y1):
+        self.x1 = x1
+        self.y1 = y1
+
+    def __str__(self):
+        return f'({self.x1},{self.y1})'
+
+    def __add__(self, operator):
+        if not isinstance(operator, operator_overload):
+            raise ValueError('The other must be an instance of the operator_overload')
+
+        return operator_overload(self.x1 + operator.x1, self.y1 + operator.y1)
+
+    def __sub__(self, other):
+        if not isinstance(other, operator_overload):
+            raise ValueError('The other must be an instance of the operator_overload')
+
+        return operator_overload(self.x1 - other.x1, self.y1 - other.y1)
 
 
-
-t1= test(20,20)
-t2= test(20,10)
-t3=t1+t2
-t3.show()
-t3=t1-t2
-t3.show()
-
-
-
-
+if __name__ == '__main__':
+    a = operator_overload(20, 50)
+    b = operator_overload(15, 35)
+    c = b - a
+    print(c)
